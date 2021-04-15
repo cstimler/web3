@@ -1,0 +1,153 @@
+<!doctype html>
+
+<html>
+
+<head>
+<script src="node_modules/web3/dist/web3.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+  <div> Here is some content. </div>
+
+
+  <script>
+  var web3;
+  if (typeof web3 !='undefined') {
+    web3 = new Web3(Web3.currentProvider);
+  } else {
+    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+//    web3 = new Web3(new Web3HttpProvider('http://localhost:7545'));
+  }
+
+console.log("web3 current provider is:" + web3.HttpProvider);
+
+web3.eth.getAccounts().then(console.log);
+
+  var NotaryContract = new web3.eth.Contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_checksum",
+				"type": "bytes32"
+			},
+			{
+				"name": "_fileName",
+				"type": "string"
+			},
+			{
+				"name": "_comments",
+				"type": "string"
+			}
+		],
+		"name": "addEntry",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "_checksum",
+				"type": "bytes32"
+			},
+			{
+				"indexed": false,
+				"name": "_fileName",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "_setBy",
+				"type": "address"
+			}
+		],
+		"name": "NewEntry",
+		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_checksum",
+				"type": "bytes32"
+			}
+		],
+		"name": "entrySet",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"name": "myMapping",
+		"outputs": [
+			{
+				"name": "fileName",
+				"type": "string"
+			},
+			{
+				"name": "timestamp",
+				"type": "uint256"
+			},
+			{
+				"name": "checkSum",
+				"type": "bytes32"
+			},
+			{
+				"name": "comments",
+				"type": "string"
+			},
+			{
+				"name": "isSet",
+				"type": "bool"
+			},
+			{
+				"name": "setBy",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}], '0xb3aEB31016b5D70FA044Ca06d077aCB9577d13f6', { from: '0xBf22a0BFB9945AD546983dFD1fa80129550439CE', gasPrice: 100000000000,  gas: 4712388 });
+
+// var notaryInstance = NotaryContract.at("0x26cd64670C9AaE581000097145B93989b8b2c4f4");
+
+// web3.eth.defaultAccount = web3.eth.getAccounts[0];
+web3.eth.defaultAccount = "0xde3E17FC68DA61047B3c30b50E977F2acFf3A89B";
+var item = web3.eth.defaultAccount;
+console.log("The default account is: " + item);
+
+</script>
+
+</body>
+</html>
